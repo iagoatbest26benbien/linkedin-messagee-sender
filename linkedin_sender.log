@@ -1,0 +1,100 @@
+2025-05-19T19:04:22.846Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:04:22.848Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:04:22.848Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:11:27.448Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:11:27.450Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:11:27.450Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:17:15.064Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:17:15.067Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:17:15.067Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:17:59.271Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:17:59.274Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:17:59.274Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:18:13.025Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:18:13.027Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:18:13.027Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:18:21.813Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:18:21.816Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:18:21.816Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:18:37.288Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:18:37.290Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:18:37.290Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:19:39.038Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:19:39.039Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:19:39.039Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:22:04.590Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:22:04.592Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:22:04.592Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:34:19.056Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:34:19.059Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:34:19.059Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:54:11.772Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:54:11.775Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:54:11.775Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T19:55:13.254Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T19:55:13.256Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T19:55:13.256Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:03:53.279Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:03:53.281Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:03:53.281Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:04:25.103Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:04:25.106Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:04:25.106Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:12:53.460Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:12:53.463Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:12:53.464Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:13:04.082Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:13:04.085Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:13:04.085Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:16:41.248Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:16:41.251Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:16:41.251Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:16:41.251Z - Envoi de la requête à l'API Phantombuster...
+2025-05-19T20:16:41.251Z - Arguments envoyés à Phantombuster: {
+  "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1UgFEGmAaPv6gOgh7NgxRABxXgpxbHtk90v-Rxzqyuts/edit?gid=991974573#gid=991974573",
+  "sessionCookie": "***REDACTED***",
+  "message": "oeoeo",
+  "columnName": "titi",
+  "messageColumn": null,
+  "profilesPerLaunch": 1
+}
+2025-05-19T20:19:30.643Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:19:30.645Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:19:30.645Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:19:30.645Z - Vérification des paramètres:
+                - URL Spreadsheet: Présente
+                - Cookie LinkedIn: Présent
+                - Message: Présent
+                - Colonne URLs: Présente
+                - Colonne Messages: Manquante
+                - Profils par lancement: 1
+2025-05-19T20:19:30.645Z - Arguments envoyés à Phantombuster: {
+  "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1UgFEGmAaPv6gOgh7NgxRABxXgpxbHtk90v-Rxzqyuts/edit?gid=991974573#gid=991974573",
+  "sessionCookie": "***REDACTED***",
+  "message": "oeoeo",
+  "columnName": "titi",
+  "messageColumn": null,
+  "profilesPerLaunch": 1
+}
+2025-05-19T20:19:30.646Z - URL de l'API: https://api.phantombuster.com/api/v2/agents/5476900109577942/launch
+2025-05-19T20:19:30.646Z - Envoi de la requête à l'API Phantombuster...
+2025-05-19T20:23:16.252Z - Chargement de la configuration depuis temp_config.json
+2025-05-19T20:23:16.255Z - Configuration et identifiants Phantombuster chargés avec succès
+2025-05-19T20:23:16.255Z - Lancement de l'agent Phantombuster 5476900109577942...
+2025-05-19T20:23:16.255Z - Vérification des paramètres:
+                - URL Spreadsheet: Présente
+                - Cookie LinkedIn: Présent
+                - Message: Présent
+                - Colonne URLs: Présente
+                - Colonne Messages: Manquante
+                - Profils par lancement: 1
+2025-05-19T20:23:16.255Z - Arguments envoyés à Phantombuster: {
+  "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1UgFEGmAaPv6gOgh7NgxRABxXgpxbHtk90v-Rxzqyuts/edit?gid=991974573#gid=991974573",
+  "sessionCookie": "***REDACTED***",
+  "message": "oeee",
+  "columnName": "titi",
+  "messageColumn": null,
+  "profilesPerLaunch": 1
+}
+2025-05-19T20:23:16.255Z - URL de l'API: https://api.phantombuster.com/api/v2/agents/5476900109577942/launch
+2025-05-19T20:23:16.255Z - Envoi de la requête à l'API Phantombuster...

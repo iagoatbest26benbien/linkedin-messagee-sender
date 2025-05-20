@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' http://localhost:* ws://localhost:*;">
+    <title>Envoyeur de Messages LinkedIn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Envoyer des Messages LinkedIn via n8n et IA</h1>
+        <form id="sendForm">
+            <div>
+                <label for="spreadsheetUrl">URL de la Feuille Google Sheet :</label>
+                <input type="text" id="spreadsheetUrl" name="spreadsheetUrl" required>
+            </div>
+            <div>
+                <label for="sheetName">Nom de la Feuille :</label>
+                <input type="text" id="sheetName" name="sheetName" required>
+            </div>
+             <div>
+                <label for="messageColumn">En-tête Colonne Messages :</label>
+                <input type="text" id="messageColumn" name="messageColumn" required>
+            </div>
+             <div>
+                <label for="profileUrlColumn">En-tête Colonne URL Profil :</label>
+                <input type="text" id="profileUrlColumn" name="profileUrlColumn" required>
+            </div>
+            <div>
+                <label for="numberOfLaunches">Nombre de Lancements :</label>
+                <input type="number" id="numberOfLaunches" name="numberOfLaunches" value="1" min="1" required>
+            </div>
+            <div>
+                <label for="delayBetweenLaunchesMs">Délai entre les Lancements (ms) :</label>
+                <input type="number" id="delayBetweenLaunchesMs" name="delayBetweenLaunchesMs" value="5000" min="1000" required>
+            </div>
+            <button type="submit">Lancer l'Envoi</button>
+        </form>
+
+        <h2>Statut de l'exécution :</h2>
+        <div id="status">En attente des informations pour le lancement...</div>
+
+        <h2>Progression (estimée) :</h2>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <span class="progress-label" id="progress-label">0%</span>
+        </div>
+
+        <div id="response"></div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>

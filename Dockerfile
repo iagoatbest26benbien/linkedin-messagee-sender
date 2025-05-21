@@ -1,7 +1,7 @@
 FROM ghcr.io/puppeteer/puppeteer:latest
 
 # Définir le répertoire de travail dans le conteneur
-WORKDIR /app
+WORKDIR /home/pptruser/app
 
 # Copier les fichiers package.json et package-lock.json pour installer les dépendances Node.js
 # Cette étape est faite séparément pour optimiser le cache Docker

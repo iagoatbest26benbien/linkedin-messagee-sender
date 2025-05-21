@@ -188,7 +188,7 @@ app.post('/process-message', async (req, res) => {
     }
 
     // Créer un fichier de configuration temporaire pour passer les arguments au script Puppeteer
-    const tempConfigPath = path.join(__dirname, 'temp_config.json');
+    const tempConfigPath = '/opt/render/project/src/temp_config.json'; // Utiliser un chemin absolu cohérent
     try {
       await fsp.writeFile(tempConfigPath, JSON.stringify({ argument: { profileUrl, message } }, null, 2));
       console.log('Temp config file created for single message:', tempConfigPath);
@@ -242,7 +242,7 @@ app.post('/process-message', async (req, res) => {
              client.write(`event: complete\ndata: ${JSON.stringify({ success: false, message: 'Failed to start sender script process.', profileUrl: profileUrl })}\n\n`);
          });
         // Try to clean up the temporary file even on process start error
-        const tempConfigPathRoot = path.join('/opt/render/project', 'src', 'temp_config.json'); // Utiliser le chemin absolu basé sur la racine Render
+        const tempConfigPathRoot = '/opt/render/project/src/temp_config.json'; // Utiliser un chemin absolu cohérent
         fsp.unlink(tempConfigPathRoot).catch(err => console.error('Error deleting temp config file after spawn error:', err));
         // Not sending HTTP response here, n8n expects 200 for the POST request
     });
@@ -251,7 +251,7 @@ app.post('/process-message', async (req, res) => {
         console.log(`Sender script process for ${profileUrl} exited with code ${code}`);
 
         // Nettoyer le fichier de configuration temporaire
-        const tempConfigPathRoot = path.join('/opt/render/project', 'src', 'temp_config.json'); // Utiliser le chemin absolu basé sur la racine Render
+        const tempConfigPathRoot = '/opt/render/project/src/temp_config.json'; // Utiliser un chemin absolu cohérent
         fsp.unlink(tempConfigPathRoot).catch(err => console.error('Error deleting temp config file:', err));
 
         // Envoyer un événement de fin pour ce message spécifique

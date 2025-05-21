@@ -112,7 +112,8 @@ class LinkedInMessageSender {
             browser = await puppeteer.launch({ 
                 headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                executablePath: process.env.CHROMIUM_PATH || (process.platform === 'linux' ? '/usr/bin/chromium-browser' : null)
+                // Supprimer executablePath pour laisser Puppeteer trouver le navigateur par défaut dans l'image Docker
+                // executablePath: process.env.CHROMIUM_PATH || (process.platform === 'linux' ? '/usr/bin/chromium-browser' : null)
             });
             logToFile('Navigateur Puppeteer lancé avec succès.');
             const page = await browser.newPage();

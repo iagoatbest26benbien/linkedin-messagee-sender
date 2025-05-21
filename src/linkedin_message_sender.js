@@ -110,7 +110,8 @@ class LinkedInMessageSender {
         try {
             browser = await puppeteer.launch({ 
                 headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox']
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath: process.env.CHROMIUM_PATH || (process.platform === 'linux' ? '/usr/bin/chromium-browser' : null)
             });
             const page = await browser.newPage();
 

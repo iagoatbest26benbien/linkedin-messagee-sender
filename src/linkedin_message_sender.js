@@ -28,9 +28,13 @@ class LinkedInMessageSender {
 
             this.profileUrl = this.argument.profileUrl;
             this.messageText = this.argument.message;
-            // Retire la lecture de numberOfLaunches et delayBetweenLaunchesMs
-            // this.numberOfLaunches = parseInt(this.argument.numberOfLaunches) || 1;
-            // this.delayBetweenLaunchesMs = parseInt(this.argument.delayBetweenLaunchesMs) || 5000;
+
+            // Charger les identifiants LinkedIn
+            const credentialsPath = path.join(__dirname, 'credentialss.json');
+            if (!fs.existsSync(credentialsPath)) {
+                throw new Error('Fichier credentialss.json manquant');
+            }
+            this.credentials = require(credentialsPath).linkedin;
 
             logToFile('Configuration chargée avec succès pour Puppeteer (message unique)');
         } catch (error) {
@@ -39,12 +43,35 @@ class LinkedInMessageSender {
         }
     }
 
+    async login(page) {
+        logToFile('Tentative de connexion à LinkedIn...');
+        await page.goto('https://www.linkedin.com/login', { waitUntil: 'networkidle0' });
+
+        // Remplir le formulaire de connexion
+        await page.type('#username', this.credentials.email);
+        await page.type('#password', this.credentials.password);
+
+        // Cliquer sur le bouton de connexion
+        await page.click('button[type="submit"]');
+
+        // Attendre que la navigation soit terminée
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+
+        // Vérifier si la connexion a réussi
+        const currentUrl = page.url();
+        if (currentUrl.includes('feed')) {
+            logToFile('Connexion à LinkedIn réussie');
+            return true;
+        } else {
+            throw new Error('Échec de la connexion à LinkedIn');
+        }
+    }
+
     async sendMessage(page, profileUrl, messageText) {
         logToFile(`Navigation vers le profil: ${profileUrl}`);
         await page.goto(profileUrl, { waitUntil: 'networkidle2' });
 
         // Attendre que la page se charge et chercher le bouton message
-        // Sélecteurs peuvent varier, celui-ci est un exemple typique
         const messageButtonSelector = 'button:has(span:has-text("Message"))';
         try {
             await page.waitForSelector(messageButtonSelector, { timeout: 10000 });
@@ -66,52 +93,38 @@ class LinkedInMessageSender {
             await page.click(sendButtonSelector);
             logToFile('Message envoyé (bouton cliqué).');
 
-            // Optionnel: Attendre confirmation ou fermeture de la modale
-            // await page.waitForFunction('!document.querySelector(".msg-form__contenteditable[role=\"textbox\"]")', { timeout: 10000 }).catch(() => logToFile('Modale de message n'a pas disparu après envoi, ce n'est pas forcément une erreur.'));
+            // Attendre un peu pour s'assurer que le message est envoyé
+            await page.waitForTimeout(2000);
 
             logToFile(`Message envoyé avec succès à ${profileUrl}`);
 
         } catch (error) {
             logToFile(`Erreur lors de l'envoi du message à ${profileUrl}: ${error.message}`);
-            // Gérer l'erreur (ex: bouton non trouvé, modale non ouverte, etc.)
-            throw error; // Propage l'erreur pour l'enregistrer dans les logs principaux
+            throw error;
         }
     }
 
     async run() {
-        // logToFile(`Lancement de l'automatisation Puppeteer pour ${this.numberOfLaunches} lancements.`); // Retire ce log
         logToFile('Lancement de l\'automatisation Puppeteer pour un message.');
         let browser;
         try {
-            browser = await puppeteer.launch({ headless: true }); // Changez headless sur false pour voir le navigateur
+            browser = await puppeteer.launch({ 
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
             const page = await browser.newPage();
 
-            // !!! NOTE IMPORTANTE !!!
-            // Puppeteer ne gère pas automatiquement l'authentification LinkedIn.
-            // Vous devez soit:
-            // 1. Charger des cookies de session existants.
-            // 2. Implémenter un flux de connexion (très complexe et sujet aux changements de LinkedIn).
-            // Actuellement, le script suppose que vous êtes déjà connecté ou que les cookies sont gérés.
-            // Sans authentification, la navigation échouera probablement.
-            logToFile('Assurez-vous que l'authentification LinkedIn est gérée (ex: via cookies).');
-            // Exemple (non implémenté ici) : await page.setCookie(...vos_cookies_linkedin...);
+            // Se connecter à LinkedIn
+            await this.login(page);
 
-            // Supprime la boucle for - on envoie un seul message par exécution du script
-            // for (let i = 0; i < this.numberOfLaunches; i++) {
-            //     logToFile(`Lancement ${i + 1} sur ${this.numberOfLaunches}`);
-                 await this.sendMessage(page, this.profileUrl, this.messageText);
+            // Envoyer le message
+            await this.sendMessage(page, this.profileUrl, this.messageText);
 
-            //     if (i < this.numberOfLaunches - 1) {
-            //         logToFile(`Attente de ${this.delayBetweenLaunchesMs}ms avant le prochain lancement...`);
-            //         await new Promise(resolve => setTimeout(resolve, this.delayBetweenLaunchesMs));
-            //     }
-            // }
-
-            logToFile('Envoi du message terminé.'); // Met à jour ce log
+            logToFile('Envoi du message terminé.');
 
         } catch (error) {
             logToFile(`Erreur globale lors de l'exécution Puppeteer: ${error.message}`);
-            throw error; // Propage l'erreur
+            throw error;
         } finally {
             if (browser) {
                 await browser.close();
@@ -127,10 +140,10 @@ async function main() {
         const sender = new LinkedInMessageSender();
         await sender.run();
         logToFile('Script terminé avec succès.');
-        process.exit(0); // Indique succès
+        process.exit(0);
     } catch (error) {
         logToFile(`Erreur fatale dans le script principal: ${error.message}`);
-        process.exit(1); // Indique erreur
+        process.exit(1);
     }
 }
 

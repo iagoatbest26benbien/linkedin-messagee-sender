@@ -26,10 +26,11 @@ class LinkedInMessageSender {
 
             this.profileUrl = this.argument.profileUrl;
             this.messageText = this.argument.message;
-            this.numberOfLaunches = parseInt(this.argument.numberOfLaunches) || 1;
-            this.delayBetweenLaunchesMs = parseInt(this.argument.delayBetweenLaunchesMs) || 5000;
+            // Retire la lecture de numberOfLaunches et delayBetweenLaunchesMs
+            // this.numberOfLaunches = parseInt(this.argument.numberOfLaunches) || 1;
+            // this.delayBetweenLaunchesMs = parseInt(this.argument.delayBetweenLaunchesMs) || 5000;
 
-            logToFile('Configuration chargée avec succès pour Puppeteer');
+            logToFile('Configuration chargée avec succès pour Puppeteer (message unique)');
         } catch (error) {
             logToFile(`Erreur lors du chargement de la configuration: ${error.message}`);
             throw error;
@@ -76,7 +77,8 @@ class LinkedInMessageSender {
     }
 
     async run() {
-        logToFile(`Lancement de l'automatisation Puppeteer pour ${this.numberOfLaunches} lancements.`);
+        // logToFile(`Lancement de l'automatisation Puppeteer pour ${this.numberOfLaunches} lancements.`); // Retire ce log
+        logToFile('Lancement de l\'automatisation Puppeteer pour un message.');
         let browser;
         try {
             browser = await puppeteer.launch({ headless: true }); // Changez headless sur false pour voir le navigateur
@@ -92,17 +94,18 @@ class LinkedInMessageSender {
             logToFile('Assurez-vous que l'authentification LinkedIn est gérée (ex: via cookies).');
             // Exemple (non implémenté ici) : await page.setCookie(...vos_cookies_linkedin...);
 
-            for (let i = 0; i < this.numberOfLaunches; i++) {
-                logToFile(`Lancement ${i + 1} sur ${this.numberOfLaunches}`);
-                await this.sendMessage(page, this.profileUrl, this.messageText);
+            // Supprime la boucle for - on envoie un seul message par exécution du script
+            // for (let i = 0; i < this.numberOfLaunches; i++) {
+            //     logToFile(`Lancement ${i + 1} sur ${this.numberOfLaunches}`);
+                 await this.sendMessage(page, this.profileUrl, this.messageText);
 
-                if (i < this.numberOfLaunches - 1) {
-                    logToFile(`Attente de ${this.delayBetweenLaunchesMs}ms avant le prochain lancement...`);
-                    await new Promise(resolve => setTimeout(resolve, this.delayBetweenLaunchesMs));
-                }
-            }
+            //     if (i < this.numberOfLaunches - 1) {
+            //         logToFile(`Attente de ${this.delayBetweenLaunchesMs}ms avant le prochain lancement...`);
+            //         await new Promise(resolve => setTimeout(resolve, this.delayBetweenLaunchesMs));
+            //     }
+            // }
 
-            logToFile('Tous les lancements terminés.');
+            logToFile('Envoi du message terminé.'); // Met à jour ce log
 
         } catch (error) {
             logToFile(`Erreur globale lors de l'exécution Puppeteer: ${error.message}`);

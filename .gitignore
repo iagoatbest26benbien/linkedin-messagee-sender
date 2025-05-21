@@ -1,3 +1,12 @@
-node_modules
-node_modules
-node_modules
+# Ignorer les dépendances Node.js
+node_modules/
+
+# Ignorer les fichiers temporaires et les logs
+temp_config.json
+linkedin_sender.log
+
+# Ignorer le fichier credentials (même si le nom a été changé pour l'exemple, c'est une bonne pratique)
+credentialss.json
+
+# Ignorer le dossier de cache de Puppeteer (peut être volumineux)
+.cache/

@@ -4,7 +4,6 @@ const fs = require('fs'); // Importation du module fs standard
 const fsp = require('fs').promises; // Utiliser un autre nom pour fs.promises
 const cors = require('cors');
 const axios = require('axios'); // Importer axios pour les appels HTTP
-const { Client } = require('linkedin-private-api'); // Ré-importer la librairie LinkedIn
 
 const app = express();
 const port = 3000;
@@ -26,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 // Vérifier l'existence des fichiers requis au démarrage du serveur
-const requiredFiles = ['credentialss.json'];
+const requiredFiles = ['credentials.json'];
 const missingFiles = requiredFiles.filter(file => !fs.existsSync(path.join(__dirname, file)));
 
 if (missingFiles.length > 0) {
@@ -158,6 +157,7 @@ app.post('/n8n-update', (req, res) => {
 });
 
 // Route appelée par n8n pour envoyer un message LinkedIn
+/*
 app.post('/api/send-message', async (req, res) => {
     console.log('Received request to /api/send-message from n8n');
     const { message, profileUrl } = req.body; // Recevoir le message et l'URL du profil de n8n
@@ -240,6 +240,7 @@ app.post('/api/send-message', async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 });
+*/
 
 // Route /send appelée par l'interface web pour déclencher le workflow n8n
 app.post('/send', async (req, res) => {

@@ -1,5 +1,5 @@
 {
-  "name": "linkedin-message-sender",
+  "name": "image.pnglinkedin-message-sender",
   "version": "1.0.0",
   "description": "Application pour envoyer automatiquement des messages sur LinkedIn à partir d'une liste de profils stockée dans Google Sheets.",
   "main": "server.js",
@@ -14,7 +14,6 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "linkedin-private-api": "^3.0.0",
     "n8n": "^1.93.0"
   }
 }

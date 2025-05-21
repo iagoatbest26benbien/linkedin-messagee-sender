@@ -1,4 +1,6 @@
-document.getElementById('sendForm').addEventListener('submit', async function(event) {
+document.getElementById('sendForm').addEventListener('submit', handleFormSubmit);
+
+async function handleFormSubmit(event) {
   event.preventDefault(); // Prevent default form submission
 
   const form = event.target;
@@ -8,6 +10,12 @@ document.getElementById('sendForm').addEventListener('submit', async function(ev
   formData.forEach((value, key) => {
     jsonData[key] = value;
   });
+
+  // Client-side validation
+  if (!jsonData.spreadsheetUrl || !jsonData.sheetName || !jsonData.messageColumn || !jsonData.profileUrlColumn || !jsonData.numberOfLaunches || !jsonData.delayBetweenLaunchesMs) {
+      alert('Veuillez remplir tous les champs requis.');
+      return; // Stop the function if validation fails
+  }
 
   const responseDiv = document.getElementById('response');
   const statusDiv = document.getElementById('status');
@@ -133,4 +141,4 @@ document.getElementById('sendForm').addEventListener('submit', async function(ev
     submitButton.disabled = false;
     if (eventSource) eventSource.close(); // Ensure connection is closed on critical error
   }
-}); 
+} 

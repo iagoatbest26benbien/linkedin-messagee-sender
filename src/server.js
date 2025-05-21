@@ -274,9 +274,9 @@ app.post('/send', async (req, res) => {
   const n8nWorkflowData = req.body; // Les arguments pour n8n (Google Sheet, etc.)
 
   // !!! Placeholder pour l'URL du webhook n8n !!!
-  const n8nWebhookUrl = 'https://ael26.app.n8n.cloud/webhook/linkedin-message-sender'; // <-- REMPLACER CECI
+  const n8nWebhookUrl = 'https://ael26.app.n8n.cloud/webhook/linkedin-message-sender'; // <-- URL du webhook n8n
 
-  if (n8nWebhookUrl === 'https://ael26.app.n8n.cloud/webhook/linkedin-message-sender') {
+  if (n8nWebhookUrl === 'VOTRE_URL_WEBHOOK_N8N_ICI') { // Cette vérification sera toujours fausse maintenant
        const errorMsg = 'Erreur: URL du webhook n8n non configurée dans server.js';
        console.error(errorMsg);
         sseClients.forEach(client => {

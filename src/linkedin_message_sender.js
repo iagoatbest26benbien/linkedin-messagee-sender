@@ -16,8 +16,9 @@ class LinkedInMessageSender {
     constructor(configPath = 'temp_config.json') {
         try {
             logToFile('Chargement de la configuration depuis ' + configPath);
-            // Lire la configuration passée par le serveur via le fichier temporaire
-            const configData = require(path.join(__dirname, configPath));
+            // Utiliser un chemin absolu cohérent pour le fichier de configuration
+            const configFilePath = '/opt/render/project/src/temp_config.json';
+            const configData = require(configFilePath);
             this.config = configData;
             this.argument = this.config.argument; // Accéder à l'objet argument
 
@@ -39,6 +40,9 @@ class LinkedInMessageSender {
             logToFile('Configuration chargée avec succès pour Puppeteer (message unique)');
         } catch (error) {
             logToFile(`Erreur lors du chargement de la configuration: ${error.message}`);
+            if (error.stack) {
+                logToFile('Stack trace:\n' + error.stack);
+            }
             throw error;
         }
     }

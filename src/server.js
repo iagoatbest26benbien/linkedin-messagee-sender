@@ -190,7 +190,8 @@ app.post('/process-message', async (req, res) => {
     // Créer un fichier de configuration temporaire pour passer les arguments au script Puppeteer
     const tempConfigPath = '/opt/render/project/src/temp_config.json'; // Utiliser un chemin absolu cohérent
     try {
-      await fsp.writeFile(tempConfigPath, JSON.stringify({ argument: { profileUrl, message } }, null, 2));
+      // S'assurer que le fichier est créé avec les bonnes permissions
+      await fsp.writeFile(tempConfigPath, JSON.stringify({ argument: { profileUrl, message } }, null, 2), { mode: 0o666 });
       console.log('Temp config file created for single message:', tempConfigPath);
     } catch (error) {
       console.error('Error creating temp config file for /process-message:', error);

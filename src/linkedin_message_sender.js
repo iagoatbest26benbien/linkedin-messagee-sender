@@ -108,11 +108,13 @@ class LinkedInMessageSender {
         logToFile('Lancement de l\'automatisation Puppeteer pour un message.');
         let browser;
         try {
+            logToFile('Tentative de lancement du navigateur Puppeteer...');
             browser = await puppeteer.launch({ 
                 headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
                 executablePath: process.env.CHROMIUM_PATH || (process.platform === 'linux' ? '/usr/bin/chromium-browser' : null)
             });
+            logToFile('Navigateur Puppeteer lancé avec succès.');
             const page = await browser.newPage();
 
             // Se connecter à LinkedIn
@@ -124,13 +126,23 @@ class LinkedInMessageSender {
             logToFile('Envoi du message terminé.');
 
         } catch (error) {
-            logToFile(`Erreur globale lors de l'exécution Puppeteer: ${error.message}`);
-            throw error;
-        } finally {
-            if (browser) {
-                await browser.close();
-                logToFile('Navigateur Puppeteer fermé.');
+            logToFile(`Erreur lors du lancement ou de l'utilisation de Puppeteer: ${error.message}`);
+            if (error.stack) {
+                logToFile('Stack trace:\n' + error.stack);
             }
+            // Tenter de fermer le navigateur même en cas d'erreur pendant le lancement ou l'utilisation
+             if (browser) {
+                await browser.close().catch(closeError => logToFile(`Erreur lors de la fermeture du navigateur après échec: ${closeError.message}`));
+                logToFile('Navigateur Puppeteer fermé après erreur.');
+            }
+            throw error; // Rethrow l'erreur pour qu'elle soit gérée par le catch principal
+        } finally {
+           // Le bloc catch gère maintenant la fermeture du navigateur si nécessaire.
+           // Ce finally n'est plus strictement nécessaire si le catch gère la fermeture, mais peut être gardé pour d'autres nettoyages.
+           // if (browser && !browser.isConnected()) { // Ajout d'une condition pour éviter double fermeture si géré par catch
+           //     // Si le navigateur existe mais n'est plus connecté, il a peut-être déjà été fermé ou a crashé.
+           //     logToFile('Navigateur semble déjà fermé ou non connecté dans finally.');
+           // }
         }
     }
 }

@@ -170,15 +170,22 @@ app.post('/api/send-message', async (req, res) => {
     }
 
     try {
-        // Lire les identifiants LinkedIn depuis credentialss.json
-        const credentialsPath = path.join(__dirname, 'credentialss.json');
-        const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
-        const linkedinUsername = credentials.linkedinUsername;
-        const linkedinPassword = credentials.linkedinPassword;
-        const linkedinCookie = credentials.linkedinCookie;
+        // Lire les identifiants depuis les variables d'environnement
+        const linkedinUsername = process.env.LINKEDIN_USERNAME;
+        const linkedinPassword = process.env.LINKEDIN_PASSWORD;
+        const linkedinCookie = process.env.LINKEDIN_COOKIE; // Peut être undefined si non utilisé
+        const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL;
+        const n8nApiKey = process.env.N8N_API_KEY; // Peut être undefined si non utilisé
 
+        // Vérification des variables d'environnement requises
         if ((!linkedinUsername || !linkedinPassword) && !linkedinCookie) {
-            const errorMsg = 'LinkedIn credentials (username/password or cookie) are missing in credentialss.json.';
+            const errorMsg = 'LinkedIn credentials (username/password or cookie) are missing in environment variables.';
+            console.error(errorMsg);
+            throw new Error(errorMsg);
+        }
+
+        if (!n8nWebhookUrl) {
+            const errorMsg = 'n8n Webhook URL is missing in environment variables.';
             console.error(errorMsg);
             throw new Error(errorMsg);
         }

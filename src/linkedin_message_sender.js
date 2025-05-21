@@ -1,21 +1,23 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs').promises;
 const path = require('path');
+const fs = require('fs');
 
-// Configuration du logging
-const logToFile = async (message) => {
+// Fonction pour logger dans un fichier
+function logToFile(message) {
+    const logPath = path.join(__dirname, 'linkedin_sender.log');
     const timestamp = new Date().toISOString();
-    const logMessage = `${timestamp} - ${message}\n`;
-    await fs.appendFile('linkedin_sender.log', logMessage);
-    console.log(message);
-};
+    const logMessage = `[${timestamp}] ${message}\n`;
+    
+    fs.appendFileSync(logPath, logMessage);
+    console.log(message); // Afficher aussi dans la console
+}
 
 class LinkedInMessageSender {
     constructor(configPath = 'temp_config.json') {
         try {
             logToFile('Chargement de la configuration depuis ' + configPath);
             // Lire la configuration passée par le serveur via le fichier temporaire
-            const configData = require(path.join(__dirname, '..', configPath));
+            const configData = require(path.join(__dirname, configPath));
             this.config = configData;
             this.argument = this.config.argument; // Accéder à l'objet argument
 

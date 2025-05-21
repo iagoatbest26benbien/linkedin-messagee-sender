@@ -6,7 +6,7 @@ const cors = require('cors');
 const axios = require('axios'); // Importer axios pour les appels HTTP
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Utiliser le port de l'environnement ou 3000 par défaut
 
 app.use(cors());
 app.use(express.json());
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
 // Vérifier l'existence des fichiers requis au démarrage du serveur
 const requiredFiles = ['credentialss.json'];
-const missingFiles = requiredFiles.filter(file => !fs.existsSync(path.join(__dirname, '..', file)));
+const missingFiles = requiredFiles.filter(file => !fs.existsSync(path.join(__dirname, file)));
 
 if (missingFiles.length > 0) {
     console.error('Fichiers essentiels manquants pour le démarrage:', missingFiles);
@@ -171,8 +171,7 @@ app.post('/process-message', async (req, res) => {
     }
 
     // Créer un fichier de configuration temporaire pour passer les arguments au script Puppeteer
-    // Note: Ce fichier ne contiendra plus numberOfLaunches ou delayBetweenLaunchesMs
-    const tempConfigPath = path.join(__dirname, '..', 'temp_config.json');
+    const tempConfigPath = path.join(__dirname, 'temp_config.json');
     try {
       await fsp.writeFile(tempConfigPath, JSON.stringify({ argument: { profileUrl, message } }, null, 2));
       console.log('Temp config file created for single message:', tempConfigPath);
@@ -188,11 +187,10 @@ app.post('/process-message', async (req, res) => {
     const senderScriptPath = path.join(__dirname, 'linkedin_message_sender.js');
 
     // Utiliser spawn pour exécuter le script dans un nouveau processus
-    // Le script Puppeteer sera exécuté une seule fois par appel à cet endpoint
     const { spawn } = require('child_process');
-    const scriptProcess = spawn('node', [senderScriptPath, tempConfigPath], {
+    const scriptProcess = spawn('node', [senderScriptPath], {
         stdio: ['pipe', 'pipe', 'pipe'],
-        cwd: path.join(__dirname, '..')
+        cwd: __dirname
     });
 
     let scriptOutput = '';

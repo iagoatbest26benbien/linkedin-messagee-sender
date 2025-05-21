@@ -242,7 +242,8 @@ app.post('/process-message', async (req, res) => {
              client.write(`event: complete\ndata: ${JSON.stringify({ success: false, message: 'Failed to start sender script process.', profileUrl: profileUrl })}\n\n`);
          });
         // Try to clean up the temporary file even on process start error
-        fsp.unlink(tempConfigPath).catch(err => console.error('Error deleting temp config file after spawn error:', err));
+        const tempConfigPathRoot = path.join('/opt/render/project', 'src', 'temp_config.json'); // Utiliser le chemin absolu basé sur la racine Render
+        fsp.unlink(tempConfigPathRoot).catch(err => console.error('Error deleting temp config file after spawn error:', err));
         // Not sending HTTP response here, n8n expects 200 for the POST request
     });
 
@@ -250,7 +251,8 @@ app.post('/process-message', async (req, res) => {
         console.log(`Sender script process for ${profileUrl} exited with code ${code}`);
 
         // Nettoyer le fichier de configuration temporaire
-        fsp.unlink(tempConfigPath).catch(err => console.error('Error deleting temp config file:', err));
+        const tempConfigPathRoot = path.join('/opt/render/project', 'src', 'temp_config.json'); // Utiliser le chemin absolu basé sur la racine Render
+        fsp.unlink(tempConfigPathRoot).catch(err => console.error('Error deleting temp config file:', err));
 
         // Envoyer un événement de fin pour ce message spécifique
          const result = code === 0 ? 

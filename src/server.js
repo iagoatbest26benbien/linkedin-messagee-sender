@@ -24,14 +24,31 @@ app.use((req, res, next) => {
     next();
 });
 
-// Vérifier l'existence des fichiers requis au démarrage du serveur
-const requiredFiles = ['credentialss.json'];
-const missingFiles = requiredFiles.filter(file => !fs.existsSync(path.join(__dirname, file)));
+// Créer le fichier credentialss.json à partir des variables d'environnement
+const createCredentialsFile = () => {
+    const credentialsPath = path.join(__dirname, 'credentialss.json');
+    const credentials = {
+        linkedin: {
+            email: process.env.LINKEDIN_EMAIL,
+            password: process.env.LINKEDIN_PASSWORD
+        }
+    };
 
-if (missingFiles.length > 0) {
-    console.error('Fichiers essentiels manquants pour le démarrage:', missingFiles);
-    console.error("Veuillez créer ces fichiers pour que l'application fonctionne.");
-    // On n'arrête pas le process ici pour permettre au front de potentiellement afficher un message
+    try {
+        fs.writeFileSync(credentialsPath, JSON.stringify(credentials, null, 2));
+        console.log('Fichier credentialss.json créé avec succès');
+        return true;
+    } catch (error) {
+        console.error('Erreur lors de la création du fichier credentialss.json:', error);
+        return false;
+    }
+};
+
+// Vérifier et créer le fichier credentialss.json si nécessaire
+if (!fs.existsSync(path.join(__dirname, 'credentialss.json'))) {
+    if (!createCredentialsFile()) {
+        console.error('Impossible de créer le fichier credentialss.json. Vérifiez les variables d\'environnement LINKEDIN_EMAIL et LINKEDIN_PASSWORD.');
+    }
 }
 
 // Servir les fichiers statiques depuis le dossier 'public'
@@ -322,10 +339,10 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
     console.log('Access the application at http://localhost:3000');
-    console.log('Ensure credentialss.json is present at the project root.');
+    console.log('Ensure credentialss.json is present in the src directory.');
 
-    if (missingFiles.length > 0) {
-        console.warn('Le serveur a démarré mais des fichiers requis sont manquants:', missingFiles);
-        console.warn(`Veuillez créer ces fichiers pour que l'application fonctionne correctement.`);
+    if (!fs.existsSync(path.join(__dirname, 'credentialss.json'))) {
+        console.warn('Le serveur a démarré mais le fichier credentialss.json est manquant.');
+        console.warn('Veuillez créer ce fichier dans le dossier src pour que l\'application fonctionne correctement.');
     }
 }); 

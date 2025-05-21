@@ -10,8 +10,8 @@ WORKDIR /home/pptruser/app
 # Cette étape est faite séparément pour optimiser le cache Docker
 COPY package*.json ./
 
-# Installer les dépendances Node.js
-RUN npm install
+# Installer les dépendances Node.js en contournant les erreurs de permission (si nécessaire)
+RUN npm install --unsafe-perm
 
 # Copier le reste du code source de l'application
 COPY . ./

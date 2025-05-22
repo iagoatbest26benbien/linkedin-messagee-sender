@@ -1,8 +1,27 @@
 # Dependencies
 node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/build
+/dist
+/src/renderer/build
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Environment variables
 .env
@@ -33,7 +52,6 @@ coverage
 *.swo
 
 # OS
-.DS_Store
 Thumbs.db
 
 # Project specific
@@ -45,3 +63,6 @@ linkedin_sender.log
 
 # Ignorer le dossier de cache de Puppeteer (peut être volumineux)
 .cache/
+
+# Electron
+out/

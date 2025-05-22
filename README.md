@@ -1,65 +1,102 @@
-# LinkedIn Message Sender via Puppeteer
+# LinkedIn Message Sender
 
-## Description
-Application web locale pour automatiser l'envoi de messages sur LinkedIn en utilisant Puppeteer.
+Une application Electron avec interface React pour envoyer automatiquement des messages LinkedIn via n8n.
 
-## Architecture
-L'application fonctionne localement avec une interface web simple. Lorsque vous lancez le processus, le serveur local reçoit les paramètres et exécute un script Node.js qui utilise Puppeteer pour ouvrir un navigateur, naviguer sur LinkedIn et envoyer le message.
+## 🚀 Fonctionnalités
 
-Interface Web (public/index.html) <-> Serveur Express (src/server.js) <-> Script d'Automatisation (src/linkedin_message_sender.js) <-> Navigateur (via Puppeteer)
+- Interface moderne avec React et Material-UI
+- Envoi automatique de messages LinkedIn
+- File d'attente de messages
+- Statut en temps réel des messages
+- Intégration avec n8n
+- Sécurisation des identifiants
 
-## Prérequis
-- Node.js (version 14 ou supérieure)
-- Un compte LinkedIn avec une session active. **Note Importante : L'authentification LinkedIn avec Puppeteer peut nécessiter la gestion des cookies de session pour rester connecté. Cette étape n'est pas incluse automatiquement et peut nécessiter une configuration manuelle ou un script de connexion.**
+## 📋 Prérequis
 
-## Installation
+- Node.js (v14 ou supérieur)
+- npm (v6 ou supérieur)
+- Un compte LinkedIn
+- n8n (pour l'automatisation)
 
-1. Clonez ou téléchargez ce dépôt.
+## 🛠️ Installation
 
-2. Ouvrez votre terminal à la racine du dossier du projet et installez les dépendances :
+1. Cloner le repository :
 ```bash
+git clone [URL_DU_REPO]
+cd linkedin-message-sender
+```
+
+2. Installer les dépendances :
+```bash
+# Installation des dépendances principales
 npm install
+
+# Installation des dépendances React
+cd src/renderer
+npm install
+cd ../..
 ```
-Puppeteer téléchargera également la version de Chromium nécessaire.
 
-## Utilisation
+## 🚀 Développement
 
-1. Démarrez le serveur local depuis la racine du projet :
+Pour lancer l'application en mode développement :
+
 ```bash
-npm start
+npm run dev
 ```
 
-2. Ouvrez votre navigateur à l'adresse : `http://localhost:3000`
+## 📦 Build
 
-3. Remplissez les champs requis dans l'interface web (URL du profil LinkedIn, Message, Nombre de lancements, Délai). Ces informations seront passées au script d'automatisation.
+Pour créer l'exécutable :
 
-4. Cliquez sur le bouton "Lancer l'envoi via Puppeteer".
+```bash
+npm run build
+```
 
-5. Le statut et les logs de l'exécution Puppeteer s'afficheront dans la zone de statut de l'interface web.
+L'exécutable sera créé dans le dossier `dist`.
 
-## Fichiers Clés
-- `public/index.html` : Interface utilisateur web.
-- `public/style.css` : Fichier CSS pour styliser l'interface (à créer/modifier).
-- `src/server.js` : Serveur Express gérant les requêtes de l'interface et lançant le script d'automatisation Puppeteer.
-- `src/linkedin_message_sender.js` : Script Node.js qui utilise Puppeteer pour l'automatisation LinkedIn.
-- `credentialss.json` : Peut potentiellement être utilisé pour stocker des informations sensibles si nécessaire par le script (comme les cookies), bien que le script actuel ne l'utilise pas directement. (gardé localement).
-- `package.json` : Gère les dépendances Node.js, incluant Puppeteer et Express.
-- `.gitignore` : Liste les fichiers et dossiers à ignorer par Git.
-- `linkedin_sender.log` : Fichier de log généré par le script d'envoi.
-- `temp_config.json` : Fichier temporaire créé par `server.js` pour passer la configuration au script d'envoi (automatiquement supprimé après exécution du script).
-- `README.md` : Ce fichier.
+## 🔧 Configuration n8n
 
-## Sécurité
-- Si vous utilisez des cookies de session ou d'autres informations sensibles, stockez-les localement et ne les committez pas dans un dépôt public.
+1. Dans n8n, créez un nouveau workflow
+2. Ajoutez un nœud HTTP Request
+3. Configurez-le comme suit :
+   - URL : `http://localhost:3000/send-message`
+   - Méthode : POST
+   - Body :
+   ```json
+   {
+     "profileUrl": "URL_DU_PROFIL_LINKEDIN",
+     "message": "VOTRE_MESSAGE"
+   }
+   ```
 
-## Limitations
-- L'automatisation de navigateur est sensible aux changements de l'interface de LinkedIn. Les sélecteurs CSS utilisés par Puppeteer pourraient devoir être mis à jour si LinkedIn modifie son site.
-- La gestion de l'authentification (connexion ou utilisation de cookies) n'est pas entièrement automatisée dans ce script et nécessite une configuration ou une extension.
+## 📝 Utilisation
 
-## Dépannage
-- **Erreurs de démarrage du serveur:** Vérifiez que `server.js` est dans `src/`, `index.html` dans `public/`, et que `npm install` a été exécuté.
-- **Erreurs lors du lancement via l'interface:** Vérifiez les logs dans la console du serveur (`npm start`) et les messages affichés dans la zone de statut de l'interface. Vérifiez également que vous êtes connecté à LinkedIn dans la session Puppeteer (cela peut nécessiter la gestion des cookies).
-- **Problèmes avec Puppeteer:** Assurez-vous que Puppeteer a correctement téléchargé Chromium. Parfois, relancer `npm install` peut aider. Vérifiez également les sélecteurs CSS si l'interface LinkedIn a changé.
+1. Lancez l'application
+2. Entrez vos identifiants LinkedIn
+3. Configurez votre workflow n8n
+4. Les messages seront envoyés automatiquement
 
-## Support
-Consultez les logs dans la console du serveur et le fichier `linkedin_sender.log`. Pour des problèmes spécifiques à Puppeteer, consultez leur documentation officielle.
+## ⚠️ Sécurité
+
+- Les identifiants sont stockés localement
+- L'application utilise l'authentification à deux facteurs si activée
+- Les messages sont traités de manière séquentielle
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à :
+
+1. Fork le projet
+2. Créer une branche (`git checkout -b feature/AmazingFeature`)
+3. Commit vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push sur la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 📧 Support
+
+Pour toute question ou problème, veuillez ouvrir une issue sur GitHub.

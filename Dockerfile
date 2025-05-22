@@ -10,6 +10,9 @@ WORKDIR /home/pptruser/app
 # Cette étape est faite séparément pour optimiser le cache Docker
 COPY package*.json ./
 
+# S'assurer que pptruser est propriétaire des fichiers avant npm install
+RUN sudo chown -R pptruser:pptruser /home/pptruser/app
+
 # Installer les dépendances Node.js en contournant les erreurs de permission (si nécessaire)
 RUN npm install --unsafe-perm
 
